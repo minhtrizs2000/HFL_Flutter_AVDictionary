@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+
+class FlagWidget extends StatelessWidget {
+  FlagWidget({required this.language});
+
+  final String language;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 135,
+      padding: EdgeInsets.all(7),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/icons/${language.toLowerCase()}.png',
+            width: 30,
+            height: 30,
+          ),
+          Text(
+            ' $language',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
