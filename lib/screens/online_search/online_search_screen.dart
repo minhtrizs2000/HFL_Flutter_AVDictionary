@@ -107,7 +107,7 @@ class _OnlineSearchScreenState extends State<OnlineSearchScreen> {
         child: SharedAppBar(
           size: size,
           title: 'Online Search',
-          backgroundColor: kEnglishAppbarColor, customButton: null,
+          backgroundColor: Colors.red, customButton: null,
         ),
       ),
       body: Container(
@@ -121,12 +121,12 @@ class _OnlineSearchScreenState extends State<OnlineSearchScreen> {
                 textInputAction: TextInputAction.search,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                   // enabledBorder to make set color for border when unfocus
                   enabledBorder: const OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    borderSide: const BorderSide(color: Colors.blue, width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    borderSide: BorderSide(color: Colors.red, width: 1),
                   ),
                   labelText: translateType == Translate.av
                       ? 'English - Vietnamese'
@@ -168,7 +168,7 @@ class _OnlineSearchScreenState extends State<OnlineSearchScreen> {
                     padding: const EdgeInsets.fromLTRB(20, 20, 35, 20),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.blue, width: 2),
+                      border: Border.all(color: Colors.red, width: 1),
                       color: kBackgroundCardColor,
                     ),
                     child: SingleChildScrollView(

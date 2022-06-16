@@ -114,10 +114,6 @@ class _OfflineSearchScreenState extends State<OfflineSearchScreen>
                 Container(
                   height: size.height * 0.2 - 26,
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: const Radius.circular(25),
-                      bottomRight: const Radius.circular(25),
-                    ),
                     gradient: LinearGradient(
                       colors: [
                         kVietnameseAppbarColor,
@@ -162,11 +158,11 @@ class _OfflineSearchScreenState extends State<OfflineSearchScreen>
                   right: 0,
                   child: Container(
                     alignment: Alignment.center,
-                    margin: const EdgeInsets.symmetric(horizontal: 40.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 0),
                     height: 54,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(18),
+                      // borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
                             color: Colors.grey.withOpacity(0.2),
@@ -222,7 +218,7 @@ class _OfflineSearchScreenState extends State<OfflineSearchScreen>
                 ? ListView.builder(
                     key: ObjectKey(items.hashCode),
                     physics: BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       return InkWell(

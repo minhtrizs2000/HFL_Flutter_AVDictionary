@@ -37,10 +37,10 @@ class SharedAppBar extends StatelessWidget {
         ),
       ],
       centerTitle: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.only(
-          bottomLeft: const Radius.circular(20),
-          bottomRight: const Radius.circular(20),
+      shape: const RoundedRectangleBorder(
+        borderRadius:  BorderRadius.only(
+          bottomLeft:  Radius.circular(0),
+          bottomRight:  Radius.circular(0),
         ),
       ),
     );

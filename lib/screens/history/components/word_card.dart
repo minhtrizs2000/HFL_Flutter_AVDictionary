@@ -24,8 +24,8 @@ class WordCard extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: table == 'av'
-                ? [Colors.purple, Colors.blue]
-                : [Colors.purple, Colors.red],
+                ? [Colors.cyan, Colors.white]
+                : [Colors.red, Colors.white],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),

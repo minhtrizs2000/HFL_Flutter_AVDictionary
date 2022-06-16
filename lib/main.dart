@@ -37,7 +37,6 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasData) {
             return Navigation();
           } else if (snapshot.hasError) {
-            print("không được chỗ này");
            // return Text("${snapshot.error}");
             return Navigation();
           }
@@ -52,11 +51,11 @@ class MyApp extends StatelessWidget {
 class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Scaffold(
         body: Center(
           child: SpinKitFadingCircle(
-            color: Colors.blue,
+            color: Colors.cyanAccent,
             size: 50,
           ),
         ),

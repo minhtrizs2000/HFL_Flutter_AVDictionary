@@ -54,10 +54,6 @@ class _NavigationState extends State<Navigation> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topRight: const Radius.circular(30),
-            topLeft: const Radius.circular(30),
-          ),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.2),
@@ -67,31 +63,27 @@ class _NavigationState extends State<Navigation> {
         ),
         // ClipRRect to make boder of BottomNavigationBar rounded
         child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: const Radius.circular(20),
-            topRight: const Radius.circular(20),
-          ),
           child: BottomNavigationBar(
-            items: [
+            items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.search),
+                icon: Icon(Icons.search, color: Colors.white,),
                 label: 'Search',
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.cyan,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.access_time),
+                icon: Icon(Icons.access_time, color: Colors.white,),
                 label: 'History',
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.red,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.star_border_rounded),
+                icon: Icon(Icons.star_border_rounded, color: Colors.white,),
                 label: 'Favorite',
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.cyan,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.public),
+                icon: Icon(Icons.public, color: Colors.white,),
                 label: 'Online',
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.red,
               ),
             ],
             currentIndex: _selectedScreen,
@@ -104,7 +96,7 @@ class _NavigationState extends State<Navigation> {
             selectedFontSize: 1,
             unselectedFontSize: 1,
             selectedIconTheme: const IconThemeData(
-              size: 30,
+              size: 40,
             ),
             unselectedIconTheme: const IconThemeData(
               size: 20,

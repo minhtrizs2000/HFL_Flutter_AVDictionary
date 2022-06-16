@@ -1,9 +1,15 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:avdictionary/utilities/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:avdictionary/utilities/word.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:avdictionary/utilities/constaints.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share/share.dart';
 import 'package:sqflite/sqflite.dart';
 import 'components/custom_button.dart';
 import 'components/shared_appbar.dart';
@@ -23,6 +29,10 @@ class _DefinitionScreenState extends State<DefinitionScreen> {
 
   final FlutterTts flutterTts = FlutterTts();
   bool _isFavorite = false;
+
+  //screenshot and share
+  final _screenshotController = ScreenshotController();
+  late Uint8List _imageFile;
 
   void _getFavoriteStatus() async {
     Database db = await DatabaseHelper.instance.database;
@@ -165,61 +175,99 @@ class _DefinitionScreenState extends State<DefinitionScreen> {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: kBackgroundCardColor,
+      body: Screenshot(
+        controller: _screenshotController,
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: kBackgroundCardColor,
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.all(20),
+              child: SingleChildScrollView(
+                // Because Html Widget causes lagging when navigate from
+                // search screen with long html input
+                // So I used FutureBuilder and _buildHtml with some delay to make
+                // animation smoother
+                child: FutureBuilder(
+                  future: _html,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      print('Has data');
+                     //  Widget html = Html(data: htmls.toString());
+                     return Html(data: widget.word.html);
+                    }
+
+                    if (snapshot.hasError) {
+                      print(snapshot.error);
+                    }
+
+                    return Container(
+                      height: size.height * 0.8,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            margin: const EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              // Because Html Widget causes lagging when navigate from
-              // search screen with long html input
-              // So I used FutureBuilder and _buildHtml with some delay to make
-              // animation smoother
-              child: FutureBuilder(
-                future: _html,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    print('Has data');
-                   //  Widget html = Html(data: htmls.toString());
-                   // return snapshot.data;
-                  }
-
-                  if (snapshot.hasError) {
-                    print(snapshot.error);
-                  }
-
-                  return Container(
-                    height: size.height * 0.8,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
+            Positioned(
+              top: 30,
+              right: 10,
+              child: RawMaterialButton(
+                onPressed: () {
+                  _speak();
                 },
+                elevation: 1,
+                fillColor: widget.translateType == Translate.av
+                    ? kEnglishAppbarColor
+                    : kVietnameseAppbarColor,
+                child: const Icon(
+                  Icons.volume_up,
+                  size: 20,
+                  color: Colors.white,
+                ),
+                shape: CircleBorder(),
               ),
             ),
-          ),
-          Positioned(
-            top: 30,
-            right: 10,
-            child: RawMaterialButton(
-              onPressed: () {
-                _speak();
-              },
-              elevation: 1,
-              fillColor: Colors.white,
-              child: const Icon(
-                Icons.volume_up,
-                size: 20,
+            Positioned(
+              top: 80,
+              right: 10,
+              child: RawMaterialButton(
+                onPressed: _takeScreenShot,
+                elevation: 1,
+                fillColor: widget.translateType == Translate.av
+                    ? kEnglishAppbarColor
+                    : kVietnameseAppbarColor,
+                child: const Icon(
+                  Icons.share,
+                  size: 20,
+                  color: Colors.white,
+                ),
+                shape: CircleBorder(),
               ),
-              shape: CircleBorder(),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  void _takeScreenShot() async {
+    await _screenshotController.capture(delay: const Duration(milliseconds: 10)).then((_imageFile) async {
+      if (_imageFile != null) {
+        final directory = await getApplicationDocumentsDirectory();
+        final imagePath = await File('${directory.path}/image.png').create();
+        await imagePath.writeAsBytes(_imageFile);
+
+        /// Share Plugin
+        await Share.shareFiles([imagePath.path]);
+      }
+    });
+
+
   }
 }

@@ -121,11 +121,11 @@ class _HistoryScreenState extends State<HistoryScreen>
         child: SharedAppBar(
           size: size,
           title: 'History',
-          backgroundColor: kEnglishAppbarColor,
+          backgroundColor: Colors.red,
           customButton: CustomButton(
             icon: const Icon(
               Icons.delete_sweep_rounded,
-              color: Colors.blue,
+              color: Colors.red,
             ),
             onPressed: _deleteAllHistory,
           ),
